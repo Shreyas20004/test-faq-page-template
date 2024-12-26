@@ -1,4 +1,4 @@
-import './Faqpage.css'
+
 import Question from '../components/Question'
 
 export default function Faqpage() {
