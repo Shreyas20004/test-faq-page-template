@@ -1,7 +1,19 @@
-
-import Question from '../components/Question'
+import { useState } from 'react';
+import Question from '../components/Question';
 
 export default function Faqpage() {
+    const [state, setState] = useState(null);
+
+    const toggle = (id) => {
+        return () => {
+            if (state === id) {
+                setState(null);
+            } else {
+                setState(id);
+            }
+        };
+    };
+
     const faqs = [
         {
             question: 'What is Netflix?',
@@ -22,45 +34,30 @@ export default function Faqpage() {
         {
             question: 'What can I watch on Netflix?',
             answer: 'Netflix has an extensive library of feature films, documentaries, TV shows, anime, award-winning Netflix originals, and more. Watch as much as you want, anytime you want.'
-        },
-        {
-            question: 'Is Netflix good for kids?',
-            answer: 'The Netflix Kids experience is included in your membership to give parents control while kids enjoy family-friendly TV shows and movies in their own space.'
-        },
-        {
-            question: 'How does the free trial work?',
-            answer: 'Try us free for 30 days! If you enjoy your Netflix trial, do nothing, and your membership will automatically continue for as long as you choose to remain a member. Cancel anytime before your trial ends, and you won’t be charged. There’s no complicated contract, no cancellation fees, and no commitment. Cancel online anytime, 24 hours a day.'
         }
     ];
 
     return (
-        <div className="flex items-center justify-center min-h-screen p-4 bg-gray-100 sm:p-8 md:p-12 lg:p-24">
-            <div className="flex flex-col items-center justify-center w-full max-w-5xl p-6 space-y-8 bg-white border rounded-lg shadow-md sm:space-y-10 md:p-10 lg:space-y-12">
-                {/* Header Section */}
-                <div className="text-center">
-                    <h1 className="text-3xl font-semibold sm:text-4xl md:text-5xl lg:text-6xl">
-                        Got any questions?
-                    </h1>
-                    <p className="mt-2 text-lg font-light sm:text-xl md:text-2xl">
-                        We&apos;ve got answers.
-                    </p>
+        <div className='mx-auto max-w-7xl' id='wrapper'>
+            <div className='flex justify-between gap-x-36'>
+                <div className="inline my-8 text-center">
+                    <h1 className="text-6xl font-semibold">Got any questions?</h1>
+                    <p className="mt-2 text-6xl font-light">We&apos;ve got answers.</p>
                 </div>
+            </div>
 
-                {/* Button */}
-                <div className="flex justify-center mt-4">
-                    <button className="px-6 py-2 text-sm font-medium text-black transition bg-white border border-gray-300 rounded-lg shadow-sm sm:text-base md:text-lg hover:bg-gray-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2">
-                        Book an Intro Call
-                    </button>
-                </div>
+            <div className="flex justify-center mt-4">
+                <button className="px-6 py-2 text-sm font-medium text-black transition bg-white border border-gray-300 rounded-lg shadow-sm sm:text-base md:text-lg hover:bg-gray-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2">
+                    Book an Intro Call
+                </button>
+            </div>
 
-                {/* FAQ Grid */}
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:gap-8" id="questions">
-                    {faqs.map((faq, index) => (
-                        <div key={index} className="p-4 border rounded-lg shadow-sm bg-gray-50">
-                            <Question question={faq.question} answer={faq.answer} />
-                        </div>
-                    ))}
-                </div>
+            <div className="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-2 lg:gap-8 " id="questions">
+                {faqs.map((faq, i) => (
+                    <div key={i} className="p-4 border rounded-lg shadow-sm bg-gray-50" onClick={toggle(i)}>
+                        <Question question={faq.question} answer={faq.answer} i={i} state={state} />
+                    </div>
+                ))}
             </div>
         </div>
     );
